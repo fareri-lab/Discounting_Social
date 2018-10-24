@@ -1,5 +1,5 @@
 #### Intertemporal Choice Task ####
-# Developed by Michael Poon
+# Developed by Michael Poon and Dominic Fareri
 # Fareri Lab at Adelphi University
 # Most recent update: 10/4/2018
 ### specs ###
@@ -49,7 +49,7 @@ win = visual.Window([1280,800], monitor="testMonitor", units="deg", fullscr=useF
 fixation = visual.TextStim(win, text="+", height=2)
 ready_screen = visual.TextStim(win, text="Please wait for this round of the game to begin.", height=1.5)
 waiting = visual.TextStim(win, text="+", height=1.5)
-initial_fixation_dur = 4
+initial_fixation_dur = 2
 ready_screen_dur = 2
 
 #decision screen
@@ -87,12 +87,13 @@ timer = core.Clock()
 #set up trial handler
 trial_data = [r for r in csv.DictReader(open('IntertemporalChoice_design_test.csv','rU'))]
 trials = data.TrialHandler(trial_data[:], 1, method='sequential')
-print "got here"
+print "got here1" #checkpoint
 
 
 #### TASK ####
 #reset globalClock for beginning of task
 globalClock.reset()
+print "got here2" #checkpoint
 
 #present instructions
 curTime=globalClock.getTime()
@@ -101,7 +102,6 @@ if not DEBUG:
     instruct_screen.draw()
     win.flip()
     event.waitKeys(keyList=('space'))
-
 # main task loop
 def do_run(trials, run):
     
@@ -122,7 +122,6 @@ def do_run(trials, run):
     for trial in trials:
         image = "money.png"
         pictureStim.setImage(image)
-        
         #decision phase
         timer.reset()
         event.clearEvents()
@@ -151,12 +150,24 @@ def do_run(trials, run):
                     immed_text.setColor('red')
                 if resp_val == 2:
                     delay_text.setColor('red')
+                print "got here3" #checkpoint
+                pictureStim.draw()
+                cardStim_left.draw()
+                cardStim_right.draw()
+                immed_text.draw()
+                delay_text.draw()
+                win.flip()
+                core.wait(1)
+                break
+                print "got here4" #checkpoint
+            print "got here5" #checkpoint
         trials.addData('resp', resp_val)
         trials.addData('rt', resp_onset)
-        print "got here2" #checkpoint
+        print "got here5" #checkpoint
         #reset rating number color
         immed_text.setColor('#FFFFFF')
         delay_text.setColor('#FFFFFF')
+        print "got here7" #checkpoint
         #ISI
         logging.log(level=logging.DATA, msg='ISI') #send fixation log event
         timer.reset()
@@ -164,6 +175,7 @@ def do_run(trials, run):
         while timer.getTime() < isi_for_trial:
             waiting.draw()
             win.flip()
+        print "got here7" #checkpoint
     trials.saveAsText(fileName=log_file.format(subj_id, run_num)) #, dataOut='all_raw', encoding='utf-8'
 for trials, run in enumerate(trial_data):
     do_run(trials, run)
