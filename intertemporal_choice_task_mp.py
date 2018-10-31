@@ -1,7 +1,7 @@
 #### Intertemporal Choice Task ####
 # Developed by Michael Poon and Dominic Fareri
 # Fareri Lab at Adelphi University
-# Most recent update: 10/4/2018
+# Most recent update: 10/30/2018
 ### specs ###
 # 51 trials
 # Two choices: one smaller amount of money given immediately versus a larger amount at a specified delay
@@ -45,6 +45,7 @@ run_data = {
     }
 #window setup
 win = visual.Window([1280,800], monitor="testMonitor", units="deg", fullscr=useFullScreen, allowGUI=False)
+win.setColor('black') 
 #define stimulus
 fixation = visual.TextStim(win, text="+", height=2)
 ready_screen = visual.TextStim(win, text="Please wait for this round of the game to begin.", height=1.5)
@@ -67,7 +68,7 @@ outcome_map = {
     }
 '''
 #instructions
-instruct_screen = visual.TextStim(win, text='Welcome to the experiment.\n\nIn this task you will be choosing between an immediate reward or a delayed reward.\n\nIn the following slides: \nPress 1= choose immediate reward \nPress 2= choose delayed reward. \n\nWhen you are ready press SPACEBAR to continue.', pos = (0,1), wrapWidth=23, height = 1.2)
+instruct_screen = visual.TextStim(win, text='Welcome to the experiment.\n\nIn this task you will be choosing between an immediate reward or a delayed reward.\n\nIn the following slides: \nPress 1= choose immediate reward \nPress 2= choose delayed reward. \n\nWhen you are ready, press SPACEBAR to continue.', pos = (0,1), wrapWidth=23, height = 1.2)
 #exit
 exit_screen = visual.TextStim(win, text='Thanks for playing! Please wait for instructions from the researcher.', pos = (0,1), wrapWidth=20, height = 1.2)
 #create log file
@@ -77,7 +78,7 @@ expdir = os.getcwd()
 subjdir = '%s/logs/%s' % (expdir, subj_id)
 if not os.path.exists(subjdir):
     os.makedirs(subjdir)
-log_file = os.path.join(subjdir,'sub-{}_task-trust_run-{}_raw.csv')
+log_file = os.path.join(subjdir,'sub-{}_task-intertemporalchoice_run-{}_raw.csv')
 '''
 #initialize time clocks
 globalClock = core.Clock()
@@ -88,7 +89,6 @@ timer = core.Clock()
 trial_data = [r for r in csv.DictReader(open('IntertemporalChoice_design_test.csv','rU'))]
 trials = data.TrialHandler(trial_data[:], 1, method='sequential')
 print "got here1" #checkpoint
-
 
 #### TASK ####
 #reset globalClock for beginning of task
@@ -160,7 +160,6 @@ def do_run(trials, run):
                 core.wait(1)
                 break
                 print "got here4" #checkpoint
-            print "got here5" #checkpoint
         trials.addData('resp', resp_val)
         trials.addData('rt', resp_onset)
         print "got here5" #checkpoint
@@ -168,11 +167,11 @@ def do_run(trials, run):
         immed_text.setColor('#FFFFFF')
         delay_text.setColor('#FFFFFF')
         print "got here7" #checkpoint
-        #ISI
-        logging.log(level=logging.DATA, msg='ISI') #send fixation log event
+        #ITI
+        logging.log(level=logging.DATA, msg='ITI') #send fixation log event
         timer.reset()
-        isi_for_trial = float(trial['ITI'])
-        while timer.getTime() < isi_for_trial:
+        iti_for_trial = float(trial['ITI'])
+        while timer.getTime() < iti_for_trial:
             waiting.draw()
             win.flip()
         print "got here7" #checkpoint
