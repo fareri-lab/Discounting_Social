@@ -1,7 +1,7 @@
 #### Intertemporal Choice Task ####
 # Developed by Michael Poon and Dominic Fareri
 # Fareri Lab at Adelphi University
-# Most recent update: 10/30/2018
+# Most recent update: 11/11/2018
 ### specs ###
 # 51 trials
 # Two choices: one smaller amount of money given immediately versus a larger amount at a specified delay
