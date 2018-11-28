@@ -86,7 +86,7 @@ logging.setDefaultClock(globalClock)
 timer = core.Clock()
 
 #set up trial handler
-trial_data = [r for r in csv.DcictReader(open('IntertemporalChoice_17choice_test.csv','rU'))]
+trial_data = [r for r in csv.DictReader(open('IntertemporalChoice_17choice_test.csv','rU'))]
 trials = data.TrialHandler(trial_data[:], 1, method='sequential')
 print "got here1" #checkpoint
 
