@@ -45,7 +45,7 @@ run_data = {
     }
 #window setup
 win = visual.Window([1280,800], monitor="testMonitor", units="deg", fullscr=useFullScreen, allowGUI=False)
-win.setColor('black') 
+win.setColor('black')
 #define stimulus
 fixation = visual.TextStim(win, text="+", height=2)
 ready_screen = visual.TextStim(win, text="Please wait for this round of the game to begin.", height=1.5)
@@ -72,21 +72,21 @@ instruct_screen = visual.TextStim(win, text='Welcome to the experiment.\n\nIn th
 #exit
 exit_screen = visual.TextStim(win, text='Thanks for playing! Please wait for instructions from the researcher.', pos = (0,1), wrapWidth=20, height = 1.2)
 #create log file
-log_file = 'logs/{}_run_{}.csv'
-'''
+#log_file = 'logs/{}_run_{}.csv'
+
 expdir = os.getcwd()
 subjdir = '%s/logs/%s' % (expdir, subj_id)
 if not os.path.exists(subjdir):
     os.makedirs(subjdir)
 log_file = os.path.join(subjdir,'sub-{}_task-intertemporalchoice_run-{}_raw.csv')
-'''
+
 #initialize time clocks
 globalClock = core.Clock()
 logging.setDefaultClock(globalClock)
 timer = core.Clock()
 
 #set up trial handler
-trial_data = [r for r in csv.DictReader(open('IntertemporalChoice_17choice_test.csv','rU'))]
+trial_data = [r for r in csv.DcictReader(open('IntertemporalChoice_17choice_test.csv','rU'))]
 trials = data.TrialHandler(trial_data[:], 1, method='sequential')
 print "got here1" #checkpoint
 
@@ -104,16 +104,16 @@ if not DEBUG:
     event.waitKeys(keyList=('space'))
 # main task loop
 def do_run(trials, run):
-    
+
     trials = data.TrialHandler(trial_data, 1, method="sequential")
     #Ready Screen
     ready_screen.draw()
     win.flip()
     core.wait(ready_screen_dur)
-    
+
     globalClock.reset()
     studyStart = globalClock.getTime()
-    
+
     # Initial Fixation screen
     fixation.draw()
     win.flip()
@@ -175,6 +175,13 @@ def do_run(trials, run):
             waiting.draw()
             win.flip()
         print "got here7" #checkpoint
-    trials.saveAsText(fileName=log_file.format(subj_id, run_num)) #, dataOut='all_raw', encoding='utf-8'
+
+
+    #trials.saveAsText(fileName=log_file.format(subj_id, run_num)) #, dataOut='all_raw', encoding='utf-8'
+        os.chdir(subjdir)
+        trials.saveAsWideText(fileName)
+        os.chdir(expdir)
+
+
 for trials, run in enumerate(trial_data):
     do_run(trials, run)
