@@ -1,7 +1,7 @@
 #### Intertemporal Choice Task ####
 # Developed by Michael Poon and Dominic Fareri
 # Fareri Lab at Adelphi University
-# Most recent update: 11/11/2018
+# Most recent update: 11/28/2018
 ### specs ###
 # 51 trials
 # Two choices: one smaller amount of money given immediately versus a larger amount at a specified delay
@@ -25,6 +25,7 @@ DEBUG = False
 frame_rate=1
 decision_dur=()
 instruct_dur=()
+final_fixation_dur = 10
 #outcome_dur=2
 
 responseKeys=('1','2')
@@ -32,6 +33,9 @@ responseKeys=('1','2')
 #get subjID
 subjDlg=gui.Dlg(title="Intertemporal Choice Task")
 subjDlg.addField('Enter Subject ID: ')
+subjDlg.addField('Enter Session Number: ')
+subjDlg.addField('Enter Age: ')
+subjDlg.addField('Enter Sex: ')
 subjDlg.show()
 
 if gui.OK:
@@ -86,7 +90,7 @@ logging.setDefaultClock(globalClock)
 timer = core.Clock()
 
 #set up trial handler
-trial_data = [r for r in csv.DictReader(open('IntertemporalChoice_17choice_test.csv','rU'))]
+trial_data = [r for r in csv.DictReader(open('IntertemporalChoice_17item_test.csv','rU'))]
 trials = data.TrialHandler(trial_data[:], 1, method='sequential')
 print "got here1" #checkpoint
 
@@ -104,7 +108,7 @@ if not DEBUG:
     event.waitKeys(keyList=('space'))
 # main task loop
 def do_run(trials, run):
-
+    fileName=log_file.format(subj_id, run)
     trials = data.TrialHandler(trial_data, 1, method="sequential")
     #Ready Screen
     ready_screen.draw()
@@ -176,12 +180,15 @@ def do_run(trials, run):
             win.flip()
         print "got here7" #checkpoint
 
-
     #trials.saveAsText(fileName=log_file.format(subj_id, run_num)) #, dataOut='all_raw', encoding='utf-8'
         os.chdir(subjdir)
         trials.saveAsWideText(fileName)
         os.chdir(expdir)
 
-
 for trials, run in enumerate(trial_data):
     do_run(trials, run)
+
+# Exit
+exit_screen.draw()
+win.flip()
+event.waitKeys()
