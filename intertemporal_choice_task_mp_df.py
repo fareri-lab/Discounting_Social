@@ -28,7 +28,7 @@ instruct_dur=()
 final_fixation_dur = 10
 #outcome_dur=2
 
-responseKeys=('1','2','z')
+responseKeys=('1','2')
 
 #get subjID
 subjDlg=gui.Dlg(title="Intertemporal Choice Task")
@@ -82,7 +82,7 @@ expdir = os.getcwd()
 subjdir = '%s/logs/%s' % (expdir, subj_id)
 if not os.path.exists(subjdir):
     os.makedirs(subjdir)
-log_file = os.path.join(subjdir,'sub-{}_task-intertemporalchoice_run{}_raw.csv')
+log_file = os.path.join(subjdir,'sub-{}_task-intertemporalchoice_run-{}_raw.csv')
 
 #initialize time clocks
 globalClock = core.Clock()
@@ -91,7 +91,7 @@ timer = core.Clock()
 
 #set up trial handler
 trial_data = [r for r in csv.DictReader(open('IntertemporalChoice_17item_test.csv','rU'))]
-#trials = data.TrialHandler(trial_data[:], 1, method='sequential')
+trials_data = data.TrialHandler(trial_data, 1, method='sequential')
 print "got here1" #checkpoint
 
 #### TASK ####
@@ -102,18 +102,13 @@ print "got here2" #checkpoint
 #present instructions
 curTime=globalClock.getTime()
 startTime=curTime
-
-#if not DEBUG:
-instruct_screen.draw()
-win.flip()
-event.waitKeys(keyList=('space'))
-
-
+if not DEBUG:
+    instruct_screen.draw()
+    win.flip()
+    event.waitKeys(keyList=('space'))
 # main task loop
 def do_run(run, trials):
-    fileName=log_file.format(subj_id,run)
-    trials = data.TrialHandler(trial_data, 1, method="sequential")
-
+    fileName=log_file.format(subj_id, run)
     #Ready Screen
     ready_screen.draw()
     win.flip()
@@ -130,7 +125,6 @@ def do_run(run, trials):
     for trial in trials:
         image = "money.png"
         pictureStim.setImage(image)
-
         #decision phase
         timer.reset()
         event.clearEvents()
@@ -141,9 +135,9 @@ def do_run(run, trials):
             pictureStim.draw()
             cardStim_left.draw()
             cardStim_right.draw()
-            immed_left = trial['Immed']
-            delay_right = trial['Delay']
-            timeD_right = trial['Time']
+            immed_left = trial['immed']
+            delay_right = trial['delay']
+            timeD_right = trial['time']
             immediate = '$%s today' % immed_left
             delayed = '$%s in %s days' % (delay_right, timeD_right)
             immed_text.setText(immediate)
@@ -152,14 +146,7 @@ def do_run(run, trials):
             delay_text.draw()
             win.flip()
             resp = event.getKeys(keyList = responseKeys)
-
             if len(resp)>0:
-                if resp[0] == 'z':
-                    os.chdir(subjdir)
-                    trials.saveAsWideText(fileName)
-                    os.chdir(expdir)
-                    win.close()
-                    core.quit()
                 resp_val = int(resp[0])
                 resp_onset = globalClock.getTime()
                 if resp_val == 1:
@@ -179,12 +166,10 @@ def do_run(run, trials):
         trials.addData('resp', resp_val)
         trials.addData('rt', resp_onset)
         print "got here5" #checkpoint
-
         #reset rating number color
         immed_text.setColor('#FFFFFF')
         delay_text.setColor('#FFFFFF')
         print "got here7" #checkpoint
-
         #ITI
         logging.log(level=logging.DATA, msg='ITI') #send fixation log event
         timer.reset()
@@ -195,11 +180,11 @@ def do_run(run, trials):
         print "got here7" #checkpoint
 
     #trials.saveAsText(fileName=log_file.format(subj_id, run_num)) #, dataOut='all_raw', encoding='utf-8'
-    os.chdir(subjdir)
-    trials.saveAsWideText(fileName)
-    os.chdir(expdir)
+        os.chdir(subjdir)
+        trials.saveAsWideText(fileName)
+        os.chdir(expdir)
 
-for run, trials in enumerate([trial_data]):
+for run, trials in enumerate(trials_data):
     do_run(run, trials)
 
 # Exit
