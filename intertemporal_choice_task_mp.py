@@ -3,7 +3,7 @@
 # Fareri Lab at Adelphi University
 # Most recent update: 11/28/2018
 ### specs ###
-# 51 trials
+# 17 trials
 # Two choices: one smaller amount of money given immediately versus a larger amount at a specified delay
 ### timing ###
 # unlimited decision time
@@ -40,6 +40,9 @@ subjDlg.show()
 
 if gui.OK:
     subj_id=subjDlg.data[0]
+    sess_id=subjDlg.data[1]
+    age=subjDlg.data[2]
+    sex=subjDlg.data[3]
 else:
     sys.exit()
 run_data = {
@@ -92,12 +95,12 @@ timer = core.Clock()
 #set up trial handler
 trial_data = [r for r in csv.DictReader(open('IntertemporalChoice_17item_test.csv','rU'))]
 #trials = data.TrialHandler(trial_data[:], 1, method='sequential')
-print "got here1" #checkpoint
+#print "got here1" #checkpoint
 
 #### TASK ####
 #reset globalClock for beginning of task
 globalClock.reset()
-print "got here2" #checkpoint
+#print "got here2" #checkpoint
 
 #present instructions
 curTime=globalClock.getTime()
@@ -136,6 +139,9 @@ def do_run(run, trials):
         event.clearEvents()
         resp_val=None
         resp_onset=None
+
+        decision_onset = globalClock.getTime()
+
         #ifresp = 0
         while timer.getTime() < decision_dur:
             pictureStim.draw()
@@ -162,11 +168,13 @@ def do_run(run, trials):
                     core.quit()
                 resp_val = int(resp[0])
                 resp_onset = globalClock.getTime()
+                rt = resp_onset - decision_onset
+
                 if resp_val == 1:
                     immed_text.setColor('red')
                 if resp_val == 2:
                     delay_text.setColor('red')
-                print "got here3" #checkpoint
+                #print "got here3" #checkpoint
                 pictureStim.draw()
                 cardStim_left.draw()
                 cardStim_right.draw()
@@ -174,16 +182,25 @@ def do_run(run, trials):
                 delay_text.draw()
                 win.flip()
                 core.wait(1)
+                decision_offset = globalClock.getTime()
                 break
-                print "got here4" #checkpoint
+                #print "got here4" #checkpoint
+
+        trials.addData('rt',rt)
         trials.addData('resp', resp_val)
-        trials.addData('rt', resp_onset)
-        print "got here5" #checkpoint
+        trials.addData('sub',subj_id)
+        trials.addData('session',sess_id)
+        trials.addData('Age',age)
+        trials.addData('sex',sex)
+        trials.addData('decision_onset', decision_onset)
+        trials.addData('resp_onset', resp_onset)
+        trials.addData('decision_offset', decision_offset)
+        #print "got here5" #checkpoint
 
         #reset rating number color
         immed_text.setColor('#FFFFFF')
         delay_text.setColor('#FFFFFF')
-        print "got here7" #checkpoint
+        #print "got here7" #checkpoint
 
         #ITI
         logging.log(level=logging.DATA, msg='ITI') #send fixation log event
@@ -192,7 +209,7 @@ def do_run(run, trials):
         while timer.getTime() < iti_for_trial:
             waiting.draw()
             win.flip()
-        print "got here7" #checkpoint
+        #print "got here7" #checkpoint
 
     #trials.saveAsText(fileName=log_file.format(subj_id, run_num)) #, dataOut='all_raw', encoding='utf-8'
     os.chdir(subjdir)
