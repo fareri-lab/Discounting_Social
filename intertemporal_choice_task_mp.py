@@ -1,4 +1,4 @@
-#### Intertemporal Choice Task ####
+ #### Intertemporal Choice Task ####
 # Developed by Michael Poon and Dominic Fareri
 # Fareri Lab at Adelphi University
 # Most recent update: 11/28/2018
