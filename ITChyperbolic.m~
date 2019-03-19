@@ -1,6 +1,7 @@
 function [out] = ITChyperbolic(choseDelayed,ImmedAmt,DelAmt,Delay)
 % choseDelayed = 1 if delayed option is chosen, 0 if immediate option is chosen. Others are no choices
-% All inputs must be column vectors. 2016-Jun-07, Arthur Lee
+% All inputs must be column vectors. 2016-Jun-07, Arthur
+
 
 out.percentNow = (sum(choseDelayed == 0) / length(choseDelayed)) * 100;
 out.percentDelayed = (sum(choseDelayed == 1) / length(choseDelayed)) * 100;
