@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v3.1.5),
-    on Mon Aug  5 17:29:50 2019
+    on Mon Aug  5 17:23:08 2019
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -44,7 +44,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['MTurk Code'], expNam
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath='/Users/MichaelPoon/Desktop/Psychology/SDRD Project/Intertemporal Choice Task/GitHub Discounting Social/Discounting_Social/ITC_SDRD_Builder.py',
+    originPath='/Users/MichaelPoon/Desktop/Psychology/SDRD Project/Intertemporal Choice Task/GitHub Discounting Social/Discounting_Social/ITC_SDRD_Builder_v2_lastrun.py',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
