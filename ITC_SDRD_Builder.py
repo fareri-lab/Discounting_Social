@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v3.1.5),
-    on Mon Aug  5 02:56:21 2019
+    on Mon Aug  5 00:43:30 2019
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -44,7 +44,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['MTurk Code'], expNam
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath='/Users/MichaelPoon/Desktop/Psychology/SDRD Project/Intertemporal Choice Task/GitHub Discounting Social/Discounting_Social/ITC_SDRD_Builder_lastrun.py',
+    originPath='/Users/MichaelPoon/Desktop/Psychology/SDRD Project/Intertemporal Choice Task/GitHub Discounting Social/Discounting_Social/ITC_SDRD_Builder.py',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -83,14 +83,14 @@ Instructions = visual.TextStim(win=win, name='Instructions',
 
 # Initialize components for Routine "Choice"
 ChoiceClock = core.Clock()
-Immed_Choice_Box = visual.TextStim(win=win, name='Immed_Choice_Box',
+leftbox = visual.TextStim(win=win, name='leftbox',
     text='default text',
     font='Times New Roman',
     pos=(-0.5, 0.0), height=0.094, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1, 
     languageStyle='LTR',
     depth=0.0);
-Delay_Choice_Box = visual.TextStim(win=win, name='Delay_Choice_Box',
+rightbox = visual.TextStim(win=win, name='rightbox',
     text='default text',
     font='Times New Roman',
     pos=(0.5, 0.0), height=0.094, wrapWidth=None, ori=0, 
@@ -101,7 +101,7 @@ image = visual.ImageStim(
     win=win,
     name='image', 
     image='money.png', mask=None,
-    ori=0, pos=(0, 0.5), size=(0.35, 0.35),
+    ori=0, pos=(0, 0.5), size=(0.25, 0.25),
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-2.0)
@@ -119,13 +119,17 @@ Delay_Resp_Color = visual.TextStim(win=win, name='Delay_Resp_Color',
     color='white', colorSpace='rgb', opacity=1, 
     languageStyle='LTR',
     depth=-6.0);
+blank = visual.TextStim(win=win, name='blank',
+    text=None,
+    font='Arial',
+    pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
+    color='white', colorSpace='rgb', opacity=1, 
+    languageStyle='LTR',
+    depth=-8.0);
 
-# Initialize components for Routine "Response_Color"
-Response_ColorClock = core.Clock()
-
-# Initialize components for Routine "ITI"
-ITIClock = core.Clock()
-ITI_Stim = visual.TextStim(win=win, name='ITI_Stim',
+# Initialize components for Routine "ISI"
+ISIClock = core.Clock()
+text_3 = visual.TextStim(win=win, name='text_3',
     text='+',
     font='Arial',
     pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
@@ -398,7 +402,7 @@ thisExp.nextEntry()
 routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
-Loop = data.TrialHandler(nReps=None, method='sequential', 
+Loop = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
     trialList=data.importConditions('IntertemporalChoice_17item_test.csv'),
     seed=None, name='Loop')
@@ -422,22 +426,26 @@ for thisLoop in Loop:
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
-    Immed_Choice_Box.setText(Immed_Choice_Text)
-    Delay_Choice_Box.setText(Delay_Choice_Text)
+    leftbox.setText(Immed_Choice)
+    rightbox.setText(Delay_Choice)
     Immed_Resp = keyboard.Keyboard()
     Delay_Resp = keyboard.Keyboard()
     Immed_Resp_Color.setColor('red', colorSpace='rgb')
     Immed_Resp_Color.setPos((-0.5, 0))
-    Immed_Resp_Color.setText(Immed_Choice_Text)
+    Immed_Resp_Color.setText(Immed_Choice)
     Immed_Resp_Color.setFont('Arial')
     Immed_Resp_Color.setHeight(0.1)
     Delay_Resp_Color.setColor('red', colorSpace='rgb')
     Delay_Resp_Color.setPos((0.5, 0))
-    Delay_Resp_Color.setText(Delay_Choice_Text)
+    Delay_Resp_Color.setText(Delay_Choice)
     Delay_Resp_Color.setFont('Arial')
     Delay_Resp_Color.setHeight(0.1)
+    border_right = visual.Circle(win,radius = 0.4, edges = 90,lineColor='green',lineColorSpace = 'rgb', fillColor = None, pos = (0.5, 0.1), opacity = 1)
+    border_left = visual.Circle(win,radius = 0.4, edges = 90,lineColor='green',lineColorSpace = 'rgb', fillColor = None, pos = (-0.5, 0.1), opacity = 1)
+    
+    blank.setText('')
     # keep track of which components have finished
-    ChoiceComponents = [Immed_Choice_Box, Delay_Choice_Box, image, Immed_Resp, Delay_Resp, Immed_Resp_Color, Delay_Resp_Color]
+    ChoiceComponents = [leftbox, rightbox, image, Immed_Resp, Delay_Resp, Immed_Resp_Color, Delay_Resp_Color, blank]
     for thisComponent in ChoiceComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -453,33 +461,21 @@ for thisLoop in Loop:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *Immed_Choice_Box* updates
-        if t >= 0.0 and Immed_Choice_Box.status == NOT_STARTED:
+        # *leftbox* updates
+        if t >= 0.0 and leftbox.status == NOT_STARTED:
             # keep track of start time/frame for later
-            Immed_Choice_Box.tStart = t  # not accounting for scr refresh
-            Immed_Choice_Box.frameNStart = frameN  # exact frame index
-            win.timeOnFlip(Immed_Choice_Box, 'tStartRefresh')  # time at next scr refresh
-            Immed_Choice_Box.setAutoDraw(True)
-        if Immed_Choice_Box.status == STARTED and bool(Immed_Resp.keys == '1'):
-            # keep track of stop time/frame for later
-            Immed_Choice_Box.tStop = t  # not accounting for scr refresh
-            Immed_Choice_Box.frameNStop = frameN  # exact frame index
-            win.timeOnFlip(Immed_Choice_Box, 'tStopRefresh')  # time at next scr refresh
-            Immed_Choice_Box.setAutoDraw(False)
+            leftbox.tStart = t  # not accounting for scr refresh
+            leftbox.frameNStart = frameN  # exact frame index
+            win.timeOnFlip(leftbox, 'tStartRefresh')  # time at next scr refresh
+            leftbox.setAutoDraw(True)
         
-        # *Delay_Choice_Box* updates
-        if t >= 0.0 and Delay_Choice_Box.status == NOT_STARTED:
+        # *rightbox* updates
+        if t >= 0.0 and rightbox.status == NOT_STARTED:
             # keep track of start time/frame for later
-            Delay_Choice_Box.tStart = t  # not accounting for scr refresh
-            Delay_Choice_Box.frameNStart = frameN  # exact frame index
-            win.timeOnFlip(Delay_Choice_Box, 'tStartRefresh')  # time at next scr refresh
-            Delay_Choice_Box.setAutoDraw(True)
-        if Delay_Choice_Box.status == STARTED and bool(Delay_Resp.keys == '2'):
-            # keep track of stop time/frame for later
-            Delay_Choice_Box.tStop = t  # not accounting for scr refresh
-            Delay_Choice_Box.frameNStop = frameN  # exact frame index
-            win.timeOnFlip(Delay_Choice_Box, 'tStopRefresh')  # time at next scr refresh
-            Delay_Choice_Box.setAutoDraw(False)
+            rightbox.tStart = t  # not accounting for scr refresh
+            rightbox.frameNStart = frameN  # exact frame index
+            win.timeOnFlip(rightbox, 'tStartRefresh')  # time at next scr refresh
+            rightbox.setAutoDraw(True)
         
         # *image* updates
         if t >= 0.0 and image.status == NOT_STARTED:
@@ -499,6 +495,12 @@ for thisLoop in Loop:
             # keyboard checking is just starting
             win.callOnFlip(Immed_Resp.clock.reset)  # t=0 on next screen flip
             Immed_Resp.clearEvents(eventType='keyboard')
+        if Immed_Resp.status == STARTED and bool(Immed_Resp_Color.status == FINISHED):
+            # keep track of stop time/frame for later
+            Immed_Resp.tStop = t  # not accounting for scr refresh
+            Immed_Resp.frameNStop = frameN  # exact frame index
+            win.timeOnFlip(Immed_Resp, 'tStopRefresh')  # time at next scr refresh
+            Immed_Resp.status = FINISHED
         if Immed_Resp.status == STARTED:
             theseKeys = Immed_Resp.getKeys(keyList=['1'], waitRelease=False)
             if len(theseKeys):
@@ -509,6 +511,8 @@ for thisLoop in Loop:
                     endExpNow = True
                 Immed_Resp.keys = theseKeys.name  # just the last key pressed
                 Immed_Resp.rt = theseKeys.rt
+                # a response ends the routine
+                continueRoutine = False
         
         # *Delay_Resp* updates
         if t >= 0.0 and Delay_Resp.status == NOT_STARTED:
@@ -520,6 +524,13 @@ for thisLoop in Loop:
             # keyboard checking is just starting
             win.callOnFlip(Delay_Resp.clock.reset)  # t=0 on next screen flip
             Delay_Resp.clearEvents(eventType='keyboard')
+        frameRemains = 0.0 + Delay_Resp_Color.status == FINISHED- win.monitorFramePeriod * 0.75  # most of one frame period left
+        if Delay_Resp.status == STARTED and t >= frameRemains:
+            # keep track of stop time/frame for later
+            Delay_Resp.tStop = t  # not accounting for scr refresh
+            Delay_Resp.frameNStop = frameN  # exact frame index
+            win.timeOnFlip(Delay_Resp, 'tStopRefresh')  # time at next scr refresh
+            Delay_Resp.status = FINISHED
         if Delay_Resp.status == STARTED:
             theseKeys = Delay_Resp.getKeys(keyList=['2'], waitRelease=False)
             if len(theseKeys):
@@ -530,6 +541,8 @@ for thisLoop in Loop:
                     endExpNow = True
                 Delay_Resp.keys = theseKeys.name  # just the last key pressed
                 Delay_Resp.rt = theseKeys.rt
+                # a response ends the routine
+                continueRoutine = False
         
         # *Immed_Resp_Color* updates
         if (Immed_Resp.keys == '1') and Immed_Resp_Color.status == NOT_STARTED:
@@ -546,7 +559,7 @@ for thisLoop in Loop:
             Immed_Resp_Color.setAutoDraw(False)
         
         # *Delay_Resp_Color* updates
-        if (Delay_Resp.keys == '2') and Delay_Resp_Color.status == NOT_STARTED:
+        if (Delay_Resp.keys == "2") and Delay_Resp_Color.status == NOT_STARTED:
             # keep track of start time/frame for later
             Delay_Resp_Color.tStart = t  # not accounting for scr refresh
             Delay_Resp_Color.frameNStart = frameN  # exact frame index
@@ -558,6 +571,31 @@ for thisLoop in Loop:
             Delay_Resp_Color.frameNStop = frameN  # exact frame index
             win.timeOnFlip(Delay_Resp_Color, 'tStopRefresh')  # time at next scr refresh
             Delay_Resp_Color.setAutoDraw(False)
+        if responses.keys == '1':
+            border_left.autoDraw=True
+        
+        if responses.keys =='2':
+            border_right.autoDraw=True
+        
+        if money1.status == FINISHED:
+            border_left.autoDraw = False
+        
+        if money2.status==FINISHED:
+            border_right.autoDraw = False
+        
+        # *blank* updates
+        if (border_right. autoDraw==False) and blank.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            blank.tStart = t  # not accounting for scr refresh
+            blank.frameNStart = frameN  # exact frame index
+            win.timeOnFlip(blank, 'tStartRefresh')  # time at next scr refresh
+            blank.setAutoDraw(True)
+        if blank.status == STARTED and t >= (blank.tStart + 1.0):
+            # keep track of stop time/frame for later
+            blank.tStop = t  # not accounting for scr refresh
+            blank.frameNStop = frameN  # exact frame index
+            win.timeOnFlip(blank, 'tStopRefresh')  # time at next scr refresh
+            blank.setAutoDraw(False)
         
         # check for quit (typically the Esc key)
         if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -580,10 +618,10 @@ for thisLoop in Loop:
     for thisComponent in ChoiceComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    Loop.addData('Immed_Choice_Box.started', Immed_Choice_Box.tStartRefresh)
-    Loop.addData('Immed_Choice_Box.stopped', Immed_Choice_Box.tStopRefresh)
-    Loop.addData('Delay_Choice_Box.started', Delay_Choice_Box.tStartRefresh)
-    Loop.addData('Delay_Choice_Box.stopped', Delay_Choice_Box.tStopRefresh)
+    Loop.addData('leftbox.started', leftbox.tStartRefresh)
+    Loop.addData('leftbox.stopped', leftbox.tStopRefresh)
+    Loop.addData('rightbox.started', rightbox.tStartRefresh)
+    Loop.addData('rightbox.stopped', rightbox.tStopRefresh)
     Loop.addData('image.started', image.tStartRefresh)
     Loop.addData('image.stopped', image.tStopRefresh)
     # check responses
@@ -606,23 +644,21 @@ for thisLoop in Loop:
     Loop.addData('Immed_Resp_Color.stopped', Immed_Resp_Color.tStopRefresh)
     Loop.addData('Delay_Resp_Color.started', Delay_Resp_Color.tStartRefresh)
     Loop.addData('Delay_Resp_Color.stopped', Delay_Resp_Color.tStopRefresh)
-    if Immed_Resp_Color.status == FINISHED:
-        continueRoutine = False
-    
-    if Delay_Resp_Color.status == FINISHED:
-        continueRoutine = False
+    Loop.addData('blank.started', blank.tStartRefresh)
+    Loop.addData('blank.stopped', blank.tStopRefresh)
     # the Routine "Choice" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
-    # ------Prepare to start Routine "Response_Color"-------
+    # ------Prepare to start Routine "ISI"-------
     t = 0
-    Response_ColorClock.reset()  # clock
+    ISIClock.reset()  # clock
     frameN = -1
     continueRoutine = True
+    routineTimer.add(2.000000)
     # update component parameters for each repeat
     # keep track of which components have finished
-    Response_ColorComponents = []
-    for thisComponent in Response_ColorComponents:
+    ISIComponents = [text_3]
+    for thisComponent in ISIComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
         thisComponent.tStartRefresh = None
@@ -630,74 +666,27 @@ for thisLoop in Loop:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
     
-    # -------Start Routine "Response_Color"-------
-    while continueRoutine:
+    # -------Start Routine "ISI"-------
+    while continueRoutine and routineTimer.getTime() > 0:
         # get current time
-        t = Response_ColorClock.getTime()
+        t = ISIClock.getTime()
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # check for quit (typically the Esc key)
-        if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
-            core.quit()
-        
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
-            break
-        continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in Response_ColorComponents:
-            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                continueRoutine = True
-                break  # at least one component has not yet finished
-        
-        # refresh the screen
-        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-            win.flip()
-    
-    # -------Ending Routine "Response_Color"-------
-    for thisComponent in Response_ColorComponents:
-        if hasattr(thisComponent, "setAutoDraw"):
-            thisComponent.setAutoDraw(False)
-    # the Routine "Response_Color" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset()
-    
-    # ------Prepare to start Routine "ITI"-------
-    t = 0
-    ITIClock.reset()  # clock
-    frameN = -1
-    continueRoutine = True
-    # update component parameters for each repeat
-    # keep track of which components have finished
-    ITIComponents = [ITI_Stim]
-    for thisComponent in ITIComponents:
-        thisComponent.tStart = None
-        thisComponent.tStop = None
-        thisComponent.tStartRefresh = None
-        thisComponent.tStopRefresh = None
-        if hasattr(thisComponent, 'status'):
-            thisComponent.status = NOT_STARTED
-    
-    # -------Start Routine "ITI"-------
-    while continueRoutine:
-        # get current time
-        t = ITIClock.getTime()
-        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-        # update/draw components on each frame
-        
-        # *ITI_Stim* updates
-        if t >= 0.0 and ITI_Stim.status == NOT_STARTED:
+        # *text_3* updates
+        if t >= 0.0 and text_3.status == NOT_STARTED:
             # keep track of start time/frame for later
-            ITI_Stim.tStart = t  # not accounting for scr refresh
-            ITI_Stim.frameNStart = frameN  # exact frame index
-            win.timeOnFlip(ITI_Stim, 'tStartRefresh')  # time at next scr refresh
-            ITI_Stim.setAutoDraw(True)
-        frameRemains = 0.0 + ITI- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if ITI_Stim.status == STARTED and t >= frameRemains:
+            text_3.tStart = t  # not accounting for scr refresh
+            text_3.frameNStart = frameN  # exact frame index
+            win.timeOnFlip(text_3, 'tStartRefresh')  # time at next scr refresh
+            text_3.setAutoDraw(True)
+        frameRemains = 0.0 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        if text_3.status == STARTED and t >= frameRemains:
             # keep track of stop time/frame for later
-            ITI_Stim.tStop = t  # not accounting for scr refresh
-            ITI_Stim.frameNStop = frameN  # exact frame index
-            win.timeOnFlip(ITI_Stim, 'tStopRefresh')  # time at next scr refresh
-            ITI_Stim.setAutoDraw(False)
+            text_3.tStop = t  # not accounting for scr refresh
+            text_3.frameNStop = frameN  # exact frame index
+            win.timeOnFlip(text_3, 'tStopRefresh')  # time at next scr refresh
+            text_3.setAutoDraw(False)
         
         # check for quit (typically the Esc key)
         if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -707,7 +696,7 @@ for thisLoop in Loop:
         if not continueRoutine:  # a component has requested a forced-end of Routine
             break
         continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in ITIComponents:
+        for thisComponent in ISIComponents:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
                 break  # at least one component has not yet finished
@@ -716,17 +705,15 @@ for thisLoop in Loop:
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
     
-    # -------Ending Routine "ITI"-------
-    for thisComponent in ITIComponents:
+    # -------Ending Routine "ISI"-------
+    for thisComponent in ISIComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    Loop.addData('ITI_Stim.started', ITI_Stim.tStartRefresh)
-    Loop.addData('ITI_Stim.stopped', ITI_Stim.tStopRefresh)
-    # the Routine "ITI" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset()
+    Loop.addData('text_3.started', text_3.tStartRefresh)
+    Loop.addData('text_3.stopped', text_3.tStopRefresh)
     thisExp.nextEntry()
     
-# completed  repeats of 'Loop'
+# completed 1 repeats of 'Loop'
 
 
 # ------Prepare to start Routine "Thank_You"-------
