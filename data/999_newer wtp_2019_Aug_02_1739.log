@@ -1,0 +1,47 @@
+7.5853 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', color=array([ 0.,  0.,  0.]), colorSpace='rgb', fullscr=UNKNOWN, gamma=None, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x114f160d0>, multiSample=False, name='window1', numSamples=2, pos=[0, 0], screen=0, size=array([1440,  900]), stereo=False, units=u'norm', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+7.5853 	EXP 	window1: recordFrameIntervals = False
+7.7502 	EXP 	window1: recordFrameIntervals = True
+7.9339 	EXP 	window1: recordFrameIntervals = False
+8.0763 	EXP 	Created Instructions = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, name='Instructions', opacity=1.0, ori=0, pos=array([ 0.,  0.]), rgb=array([ 255.,  255.,  255.]), text=unicode(...), units=u'norm', win=Window(...), wrapWidth=1)
+8.0786 	EXP 	window1: blendMode = 'avg'
+8.0842 	EXP 	Instructions: autoDraw = True
+8.0854 	EXP 	window1: blendMode = 'avg'
+8.1014 	EXP 	window1: blendMode = 'avg'
+8.1201 	EXP 	window1: blendMode = 'avg'
+8.1353 	EXP 	window1: blendMode = 'avg'
+8.1505 	EXP 	window1: blendMode = 'avg'
+8.1676 	EXP 	window1: blendMode = 'avg'
+8.1834 	EXP 	window1: blendMode = 'avg'
+8.2007 	EXP 	window1: blendMode = 'avg'
+8.2170 	EXP 	window1: blendMode = 'avg'
+8.2342 	EXP 	window1: blendMode = 'avg'
+8.2506 	EXP 	window1: blendMode = 'avg'
+8.2672 	EXP 	window1: blendMode = 'avg'
+8.2838 	EXP 	window1: blendMode = 'avg'
+8.3005 	EXP 	window1: blendMode = 'avg'
+8.3172 	EXP 	window1: blendMode = 'avg'
+8.3335 	EXP 	window1: blendMode = 'avg'
+8.3499 	EXP 	window1: blendMode = 'avg'
+8.3667 	EXP 	window1: blendMode = 'avg'
+8.3841 	EXP 	window1: blendMode = 'avg'
+8.4007 	EXP 	window1: blendMode = 'avg'
+8.4167 	EXP 	window1: blendMode = 'avg'
+8.4341 	EXP 	window1: blendMode = 'avg'
+8.4510 	EXP 	window1: blendMode = 'avg'
+8.4670 	EXP 	window1: blendMode = 'avg'
+8.4844 	EXP 	window1: blendMode = 'avg'
+8.5002 	EXP 	window1: blendMode = 'avg'
+8.5178 	EXP 	window1: blendMode = 'avg'
+8.5339 	EXP 	window1: blendMode = 'avg'
+8.5504 	EXP 	window1: blendMode = 'avg'
+8.5672 	EXP 	window1: blendMode = 'avg'
+8.5836 	EXP 	window1: blendMode = 'avg'
+8.6006 	EXP 	window1: blendMode = 'avg'
+8.6179 	EXP 	window1: blendMode = 'avg'
+8.6340 	EXP 	window1: blendMode = 'avg'
+8.6510 	EXP 	window1: blendMode = 'avg'
+8.6668 	EXP 	window1: blendMode = 'avg'
+8.6840 	EXP 	window1: blendMode = 'avg'
+8.7001 	EXP 	window1: blendMode = 'avg'
+8.7188 	DATA 	Keypress: space
+8.7211 	EXP 	window1: mouseVisible = True
