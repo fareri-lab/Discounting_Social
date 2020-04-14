@@ -11,7 +11,7 @@ clear;
 maindir = pwd;
 
 % open output files
-fname = fullfile(maindir,'ITC_summary_6_2019.csv');
+fname = fullfile(maindir,'ITC_summary_testDF2020.csv');
 fid_run = fopen(fname,'w');
 fprintf(fid_run,'subnum,run,percentNow,percentDelayed,percentMissed,k,noise,LL,LL0,r2,percentPredicted\n');
 

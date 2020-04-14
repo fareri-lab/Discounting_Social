@@ -1,0 +1,18 @@
+Immed,Delay,Time,ITI,DecisionColor,ImmedMoney,TimeDays,DelayMoney
+$11 ,$25 ,in 5 Days,6,red,11,5,25
+$11 ,$30 ,in 11 Days,4,red,11,11,30
+$12 ,$30 ,in 38 Days,4,red,12,38,30
+$12 ,$35 ,in 76 Days,6,red,12,76,35
+$16 ,$25 ,in 113 Days,5,red,16,113,25
+$16 ,$25 ,in 70 Days,6,red,16,70,25
+$18 ,$30 ,in 67 Days,4,red,18,67,30
+$19 ,$25 ,in 20 Days,4,red,19,20,25
+$21 ,$30 ,in 171 Days,4,red,21,171,30
+$25 ,$35 ,in 4 Days,5,red,25,4,35
+$30 ,$35 ,in 3 Days,4,red,30,3,35
+$32 ,$35 ,in 59 Days,4,red,32,59,35
+$30 ,$35 ,in 42 Days,5,red,30,42,35
+$15 ,$30 ,in 158 Days,6,red,15,158,30
+$31 ,$35 ,in 129 Days,4,red,31,129,35
+$13 ,$35 ,in 27 Days,4,red,13,27,35
+$17 ,$25 ,in 9 Days,4,red,17,9,25
