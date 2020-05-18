@@ -32,12 +32,22 @@ library(rstan)
 
 setwd('/Users/dfareri/Dropbox/Dominic/Github/fareri-lab/Discounting_Social/ProlificData_MP')
 
-ITCdataPre = read.csv(file = 'R_HyperbolicPreITC_balanced_5_15_20.csv',header = TRUE)
-ITCdataPost = read.csv(file = 'R_HyperbolicPostITC_balanced_5_15_20.csv',header = TRUE)
+ITCdataPre = read.csv(file = 'R_HyperbolicPreITC_balanced_50subs_NAs_5_18_20.csv',header = TRUE)
+ITCdataPost = read.csv(file = 'R_HyperbolicPostITC_balanced_50subs_NAs_5_18_20.csv',header = TRUE)
+
 ITC_hbayesPre<-dd_hyperbolic(data = ITCdataPre,niter = 4000,nwarmup = 1000,nchain = 4, ncore = 1, nthin = 1, inits = "vb", indPars = "mean",modelRegressor = FALSE, vb = FALSE, inc_postpred = FALSE, adapt_delta = 0.95, stepsize = 1,max_treedepth = 10)
 
+plot(ITC_hbayesPre,type="trace")
+plot(ITC_hbayesPre)
+
+```
+```{r}
 ITC_hbayesPost<-dd_hyperbolic(data = ITCdataPost,niter = 4000,nwarmup = 1000,nchain = 4, ncore = 1, nthin = 1, inits = "vb", indPars = "mean",modelRegressor = FALSE, vb = FALSE, inc_postpred = FALSE, adapt_delta = 0.95, stepsize = 1,max_treedepth = 10)
 
+plot(ITC_hbayesPost,type="trace")
+plot(ITC_hbayesPost)
+
+ITC_hbayes_Output_50subs<-data.frame(matrix(data = NA, nrow = 50, ncol = 5))
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
